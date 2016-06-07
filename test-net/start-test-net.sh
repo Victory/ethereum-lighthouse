@@ -10,5 +10,5 @@ IPCPATH="geth.ipc"
 
 ARGS=" --nodiscover --maxpeers 0 $RPCARGS --datadir $DATADIR --port 30303 --identity $IDENT "
 #ARGS=" --datadir $DATADIR  init $CURDIR/$GENFILE"
-#ARGS=" --datadir $DATADIR --ipcpath $IPCPATH attach "
-echo $CMD $ARGS
+ARGS=" --datadir $DATADIR attach ipc:$DATADIR/$IPCPATH "
+$CMD $ARGS
