@@ -7,14 +7,14 @@ CURDIR=$(dirname $0)
 DATADIR="$CURDIR/eth-data"
 GENFILE="CustomGenesis.json"
 IDENT="VictoryTestNet"
-RPCARGS=" --rpc --rpcapi 'db,eth,net,web3' --rpcport 8080 --rpccorsdomain '*' "
+RPCARGS=" --rpc --rpcapi 'db,eth,net,web3' --rpcaddr eth-site --rpcport 8080 --rpccorsdomain '*' "
 IPCPATH="geth.ipc"
-BASEARGS=" --nodiscover --maxpeers 0 $RPCARGS --datadir $DATADIR --port 30303 --identity $IDENT "
+BASEARGS=" --unlock 0 --nodiscover --maxpeers 0 $RPCARGS --datadir $DATADIR --port 30303 --identity $IDENT --verbosity 6 "
 
 function help {
     echo "
 Usage
-    $0 [-c|-a|-i|-r|-m $ACCOUNT]
+    $0 [-c|-l|-a|-i|-r|-m $ACCOUNT]
 
     -i Initialize a new blockchain.
 
@@ -25,6 +25,8 @@ Usage
     -m Start mining.
 
     -c Create account with password of "password"
+
+    -l Check account balances
 Examples:
 Mining
 $0 -m 0x4e3ffc5cda0c98b5e509edd1cc4025aed281d9b3
@@ -33,7 +35,7 @@ $0 -m 0x4e3ffc5cda0c98b5e509edd1cc4025aed281d9b3
     exit;
 }
 
-while getopts "airmc:" opt; do
+while getopts "airmlc:" opt; do
   case $opt in
     a)
         echo "attaching" >&2
@@ -56,6 +58,10 @@ while getopts "airmc:" opt; do
         echo "creating account"
         METHOD="create-account"
     ;;
+    l)
+        echo "listing accounts"
+        METHOD="list-accounts"
+    ;;
     h)
         help
     ;;
@@ -66,7 +72,6 @@ if [ -z "$METHOD" ]; then
     echo "Error: No method set."
     help
 fi
-
 
 if [ "$METHOD" == "run" ]; then
     ARGS=$BASEARGS
@@ -88,6 +93,9 @@ fi
 if [ "$METHOD" == "attach" ]; then
     ARGS=" --datadir $DATADIR attach ipc:$DATADIR/$IPCPATH "
 fi
+if [ "$METHOD" == "list-accounts" ]; then
+    ARGS=" --datadir $DATADIR account list "
+fi
 
 echo $CMD $ARGS
 
@@ -96,4 +104,3 @@ $CMD $ARGS
 if [ "$METHOD" == "create-account" ]; then
     rm $IDENT-password.tmp
 fi
-
