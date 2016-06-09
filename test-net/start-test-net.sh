@@ -7,7 +7,8 @@ CURDIR=$(dirname $0)
 DATADIR="$CURDIR/eth-data"
 GENFILE="CustomGenesis.json"
 IDENT="VictoryTestNet"
-RPCARGS=" --rpc --rpcapi 'db,eth,net,web3' --rpcaddr eth-site --rpcport 8080 --rpccorsdomain '*' "
+RPCHOST="localhost"
+RPCARGS=" --rpc --rpcapi 'db,eth,net,web3' --rpcaddr $RPCHOST --rpcport 8080 --rpccorsdomain '*' "
 IPCPATH="geth.ipc"
 BASEARGS=" --unlock 0 --nodiscover --maxpeers 0 $RPCARGS --datadir $DATADIR --port 30303 --identity $IDENT --verbosity 6 "
 
@@ -57,6 +58,7 @@ while getopts "airmlc:" opt; do
     c)
         echo "creating account"
         METHOD="create-account"
+        PASSWORD="$OPTARG"
     ;;
     l)
         echo "listing accounts"
