@@ -21,11 +21,6 @@ contract RandomLighthouse is owned {
 
   address[] waitingUniformPositiveInt;
 
-
-  function debug (bytes32 msg) {
-    log0(msg);
-  }
-
   function RandomLighthouse () {
     curTic = 0;
     owned;
@@ -46,7 +41,6 @@ contract RandomLighthouse is owned {
 
   function withdrawl() {
     if (msg.sender != owner) throw;
-    //log0(balance);
     owner.send(balance/2);
   }
 }
