@@ -19,15 +19,9 @@ contract RandomLighthouse is owned {
   address owner;
   uint balance;
 
-  address[] waitingUniformPositiveInt;
-
   function RandomLighthouse () {
     curTic = 0;
     owned;
-  }
-
-  function subscribeToNextUniformPositiveInt () returns (uint32) {
-    waitingUniformPositiveInt.push(msg.sender);
   }
 
   function getUniformPositiveInt () returns(uint32) {
