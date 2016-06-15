@@ -33,8 +33,9 @@ contract RandomLighthouse is owned {
     curTic += 1;
   }
 
-  function withdrawl() {
-    if (msg.sender != owner) throw;
-    owner.send(balance/2);
+  function withdraw() {
+    if (msg.sender == owner) {
+      owner.send(balance/2);
+    }
   }
 }
