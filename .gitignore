@@ -1,2 +1,6 @@
 test-net/eth-data*
 .idea/*
+/bower_components/
+bower_components/
+node_modules/
+/node_modules/
