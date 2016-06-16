@@ -1,0 +1,26 @@
+{
+  "name": "ethereum-lighthouse",
+  "homepage": "https://github.com/Victory/ethereum-lighthouse",
+  "authors": [
+    "Victory"
+  ],
+  "description": "home of ethereum lighthouse",
+  "main": "",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "ethereum"
+  ],
+  "license": "Apache 2.0",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "web3": "^0.16.0"
+  }
+}
