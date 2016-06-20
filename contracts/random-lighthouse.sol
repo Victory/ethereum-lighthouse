@@ -19,18 +19,22 @@ contract RandomLighthouse is owned {
   address owner;
   uint balance;
 
+  event GaveNumber(address indexed sender, bytes32 msg);
+
   function RandomLighthouse () {
     curTic = 0;
     owned;
   }
 
   function getUniformPositiveInt () returns(uint32) {
+    GaveNumber(msg.sender, "Gave number");
     return uniformPositive;
   }
 
   function setUniformPositiveInt (uint32 val) forOwner {
     uniformPositive = val;
     curTic += 1;
+
   }
 
   function withdraw() {
