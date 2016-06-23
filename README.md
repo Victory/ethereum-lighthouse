@@ -1,19 +1,22 @@
 # ethereum-lighthouse
 Pushed Services for Ethereum
 
+## Getting wei
+Get wei from the testnet (Morden) from [eth faucet](http://faucet.ma.cx:3000/)
+
+
 ## To install:
 
-## solc
+### solc
 
 From offical documents
 
-http://www.ethdocs.org/en/latest/ethereum-clients/cpp-ethereum/installing-binaries/linux-ubuntu-ppa.html
+[solc ubuntu ppa](http://www.ethdocs.org/en/latest/ethereum-clients/cpp-ethereum/installing-binaries/linux-ubuntu-ppa.html)
 
 ```
 sudo add-apt-repository ppa:ethereum/ethereum-qt
 sudo add-apt-repository ppa:ethereum/ethereum
 sudo apt-get update
 sudo apt-get install cpp-ethereum
-
 ```
 
