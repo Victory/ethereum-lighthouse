@@ -1,5 +1,5 @@
-# ethereum-lighthouse
-Pushed Services for Ethereum
+# Ethereum Lighthouse
+Pushed Services for Ethereum blockchain.
 
 ## Getting wei
 Get wei from the testnet (Morden) from [eth faucet](http://faucet.ma.cx:3000/)
