@@ -14,6 +14,9 @@ jQuery(function ($) {
     showBalance();
   });
 
+  eth.getHashrate(function (err, result) {
+    $("#hashRate").text(result);
+  });
   /*
   var filter = web3.eth.filter('latest');
   filter.watch(function (err, result) {
