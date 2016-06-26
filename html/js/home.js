@@ -17,4 +17,8 @@ jQuery(function ($) {
   eth.getHashrate(function (err, result) {
     $("#hashRate").text(result);
   });
+
+  $.post("/solc", function (data) {
+    console.log(data);
+  });
 });
