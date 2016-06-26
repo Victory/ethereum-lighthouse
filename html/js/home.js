@@ -18,7 +18,8 @@ jQuery(function ($) {
     $("#hashRate").text(result);
   });
 
-  $.post("/solc", function (data) {
+  var src = "contract abstraction {}";
+  $.post("/solc", {src: src}, function (data) {
     console.log(data);
   });
 });
