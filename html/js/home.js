@@ -18,8 +18,19 @@ jQuery(function ($) {
     $("#hashRate").text(result);
   });
 
-  var src = "contract abstraction {}";
-  $.post("/solc", {src: src}, function (data) {
-    console.log(data);
+  $("textarea.contract").on('input, blur', function () {
+    $("#compileError").text("");
+  });
+
+  $("#contractForm").submit(function (evt) {
+    evt.preventDefault();
+    var src = $(this).find("textarea.contract").val();
+    $.post("/solc", {src: src}, function (data) {
+      if (typeof data === "string") {
+        $("#compileError").text(data);
+        return;
+      }
+      $("#compileResults").text(JSON.stringify(data));
+    });
   });
 });

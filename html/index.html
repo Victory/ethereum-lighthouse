@@ -30,6 +30,22 @@
             </tr>
          </table>
       </div>
+
+      <div id="contracts">
+         <form id="contractForm" method="POST" action="/solc">
+            <label>Enter Contract code:</label>
+            <div>
+               <textarea class="contract" name="contract" style="width:800px;height:300px;"></textarea>
+            </div>
+            <button type="submit">Compile</button>
+         </form>
+      </div>
+      <div>
+         <p id="compileError"></p>
+      </div>
+      <div>
+         <textarea id="compileResults"></textarea>
+      </div>
    </div>
 </body>
 </html>
