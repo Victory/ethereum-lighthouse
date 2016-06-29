@@ -25,10 +25,13 @@ jQuery(function ($) {
 
   $("#contractForm").submit(function (evt) {
     evt.preventDefault();
+
     if (!$("#coin").val()) {
       $("#compileError").text("No coin set");
       return;
     }
+    web3.eth.defaultAccount = $("#coin").val();
+
     var src = $(this).find("textarea.contract").val();
     $.post("/solc", {src: src}, function (data) {
       lastCall = data;
@@ -40,6 +43,7 @@ jQuery(function ($) {
       $("#compileResults").text(JSON.stringify(data));
       console.info(eth.contract(abi));
       var TestContract = eth.contract(JSON.parse(abi));
+
       var myTest = TestContract.new({
         data: "0x" + data.contracts.TestContract.bin,
         gas: 300000,
@@ -54,6 +58,11 @@ jQuery(function ($) {
             // check address on the second call (contract deployed)
           } else {
             console.info("theAddress", myContract.address) // the contract address
+            var instance = eth.contract(JSON.parse(abi)).at(myContract.address);
+            console.info(instance);
+            console.info("running hello world", instance.helloWorld());
+            console.info("running hello world", web3.toAscii(instance.helloWorld()));
+            instance.kill();
           }
           // Note that the returned "myContractReturned" === "myContract",
           // so the returned "myContractReturned" object will also get the address set.
