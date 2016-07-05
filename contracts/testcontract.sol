@@ -2,13 +2,14 @@ contract abstract {}
 
 contract TestContract is abstract {
   address owner;
+  string helloworld = "hello world";
 
   function TestContract() {
     owner = msg.sender;
   }
 
-  function helloWorld() returns (bytes32) {
-    return "hello world";
+  function helloWorld() constant returns (string) {
+    return helloworld;
   }
 
   function () {
