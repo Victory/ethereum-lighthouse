@@ -61,7 +61,6 @@ jQuery(function ($) {
             var instance = eth.contract(JSON.parse(abi)).at(myContract.address);
             console.info(instance);
             console.info("running hello world", instance.helloWorld());
-            console.info("running hello world", web3.toAscii(instance.helloWorld()));
             instance.kill();
           }
           // Note that the returned "myContractReturned" === "myContract",
