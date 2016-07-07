@@ -1,6 +1,7 @@
 var web3 = new Web3(new Web3.providers.HttpProvider("/parity"));
 var eth = web3.eth;
 var lastCall;
+var instance;
 jQuery(function ($) {
   var coin;
 
@@ -58,10 +59,23 @@ jQuery(function ($) {
             // check address on the second call (contract deployed)
           } else {
             console.info("theAddress", myContract.address) // the contract address
-            var instance = eth.contract(JSON.parse(abi)).at(myContract.address);
+
+            var filter = web3.eth.filter({fromBlock:0, toBlock: 'latest', address: myContract.address, 'topics':null});
+            setInterval(function () {
+              filter.watch(function (err, result) {
+                console.info('filtering', result, err);
+              });
+            }, 1000);
+
+            instance = eth.contract(JSON.parse(abi)).at(myContract.address);
             console.info(instance);
             console.info("running hello world", instance.helloWorld());
-            instance.kill();
+            instance.SaidHello().watch(function (err, result) {
+              console.info('watching', result, err);
+            });
+            setTimeout(function () {
+              instance.kill();
+            }, 60000);
           }
           // Note that the returned "myContractReturned" === "myContract",
           // so the returned "myContractReturned" object will also get the address set.
