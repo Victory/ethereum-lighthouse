@@ -36,7 +36,7 @@
             <div>
             <label>Use "It's All Text" browser plugin to enter contract code</label>
                <div>
-                  <textarea class="contract" name="contract" style="width:500px;height:100px"></textarea>
+                  <textarea class="contract" name="contract" style="width:500px;height:100px;"></textarea>
                </div>
             </div>
             <button type="submit">Compile</button>
@@ -46,7 +46,15 @@
          <p id="compileError"></p>
       </div>
       <div>
-         <textarea id="compileResults"></textarea>
+         <textarea id="compileResults" style="width:500px;height:100px;"></textarea>
+      </div>
+
+      <div>
+         <input id="contractAddress" style="width: 300px">
+      </div>
+      <div>
+
+         <button id="killContract" disabled>Kill Contract</button>
       </div>
    </div>
 </body>

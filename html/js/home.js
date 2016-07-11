@@ -61,28 +61,33 @@ jQuery(function ($) {
             console.info("theAddress", myContract.address) // the contract address
             instance = eth.contract(JSON.parse(abi)).at(myContract.address);
             instance.helloWorld();
+            $("#contractAddress").val(myContract.address);
+            $("#killContract").prop('disabled', false);
 
+            /*
             var filter = web3.eth.filter({fromBlock:0, toBlock: 'latest', address: myContract.address, 'topics':null});
             filter.watch(function (err, result) {
               console.info('filtering', result, err);
             });
+            */
 
             console.info(instance);
             console.info("running hello world", instance.helloWorld());
             instance.SaidHello().watch(function (err, result) {
               console.info('watching', result, err);
             });
-
-            /*
-            setTimeout(function () {
-              instance.kill();
-            }, 60000);
-            */
           }
-          // Note that the returned "myContractReturned" === "myContract",
-          // so the returned "myContractReturned" object will also get the address set.
         }
       });
+    });
+
+    $("#killContract").click(function () {
+      if (!instance) {
+        return;
+      }
+      instance.kill();
+      $("#contractAddress").val('');
+      $("#killContract").prop('disabled', true);
     });
   });
 });
