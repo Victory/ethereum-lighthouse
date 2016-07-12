@@ -5,6 +5,10 @@ var instance;
 jQuery(function ($) {
   var coin;
 
+  var log = function () {
+    console.info.apply(console, arguments);
+    $("#log").append(JSON.stringify(arguments) + " \n")
+  };
   var showBalance = function () {
     var bal = eth.getBalance(coin);
     $("#balanceHeader").text("Current balance is: ");
@@ -42,7 +46,7 @@ jQuery(function ($) {
       }
       var abi = data.contracts.TestContract.abi;
       $("#compileResults").text(JSON.stringify(data));
-      console.info(eth.contract(abi));
+      log(eth.contract(abi));
       var TestContract = eth.contract(JSON.parse(abi));
 
       var myTest = TestContract.new({
@@ -50,32 +54,32 @@ jQuery(function ($) {
         gas: 300000,
         from: $("#coin").val(),
       }, function (err, myContract) {
-        console.info(err, myContract);
+        log(err, myContract);
         // from offical docs at https://github.com/ethereum/wiki/wiki/JavaScript-API#web3ethcontract
         if(!err) {
           // e.g. check tx hash on the first call (transaction send)
           if(!myContract.address) {
-            console.info("transactionHash", myContract.transactionHash) // The hash of the transaction, which deploys the contract
-            // check address on the second call (contract deployed)
-          } else {
-            console.info("theAddress", myContract.address) // the contract address
+            log("transactionHash", myContract.transactionHash) // The hash of the transaction, which deploys the contract
+
+            log('getting blockNumber');
+            web3.eth.getBlockNumber(function (err, result) {
+              log('the blockNumber when we get the transactionHash', result);
+            });
+
+          } else { // check address on the second call (contract deployed)
+            log("theAddress", myContract.address) // the contract address
             instance = eth.contract(JSON.parse(abi)).at(myContract.address);
             instance.helloWorld();
             $("#contractAddress").val(myContract.address);
             $("#killContract").prop('disabled', false);
 
-            /*
-            var filter = web3.eth.filter({fromBlock:0, toBlock: 'latest', address: myContract.address, 'topics':null});
+            var filter = web3.eth.filter({toBlock: 'latest', address: myContract.address, 'topics':null});
             filter.watch(function (err, result) {
               console.info('filtering', result, err);
             });
-            */
 
-            console.info(instance);
-            console.info("running hello world", instance.helloWorld());
-            instance.SaidHello().watch(function (err, result) {
-              console.info('watching', result, err);
-            });
+            log(instance);
+            log("running hello world", instance.helloWorld());
           }
         }
       });
