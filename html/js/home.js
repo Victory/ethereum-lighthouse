@@ -49,6 +49,39 @@ jQuery(function ($) {
       log(eth.contract(abi));
       var TestContract = eth.contract(JSON.parse(abi));
 
+      function getAddress(myContract) {
+        log("transactionHash", myContract.transactionHash) // The hash of the transaction, which deploys the contract
+
+        log('getting blockNumber');
+        web3.eth.getBlockNumber(function (err, result) {
+          log('the blockNumber when we get the transactionHash', result);
+        });
+      }
+
+      function callContract(myContract) {
+        log("theAddress", myContract.address) // the contract address
+        instance = eth.contract(JSON.parse(abi)).at(myContract.address);
+        var startBlockNumber;
+        web3.eth.getBlockNumber(function (err, result) {
+          instance.helloWorld();
+          startBlockNumber = result;
+          log('called hello waiting for blocks', result);
+        });
+
+        $("#contractAddress").val(myContract.address);
+        $("#killContract").prop('disabled', false);
+
+
+        var filter = web3.eth.filter({toBlock: 'latest', address: myContract.address, 'topics': null});
+        filter.watch(function (err, result) {
+          log('startBlocknumber on watch', startBlockNumber);
+          log('filtering', result, err);
+        });
+
+        log(instance);
+        log("running hello world", instance.helloWorld());
+      }
+
       var myTest = TestContract.new({
         data: "0x" + data.contracts.TestContract.bin,
         gas: 300000,
@@ -59,35 +92,9 @@ jQuery(function ($) {
         if(!err) {
           // e.g. check tx hash on the first call (transaction send)
           if(!myContract.address) {
-            log("transactionHash", myContract.transactionHash) // The hash of the transaction, which deploys the contract
-
-            log('getting blockNumber');
-            web3.eth.getBlockNumber(function (err, result) {
-              log('the blockNumber when we get the transactionHash', result);
-            });
-
+            getAddress(myContract);
           } else { // check address on the second call (contract deployed)
-            log("theAddress", myContract.address) // the contract address
-            instance = eth.contract(JSON.parse(abi)).at(myContract.address);
-            var startBlockNumber;
-            web3.eth.getBlockNumber(function (err, result) {
-              instance.helloWorld();
-              startBlockNumber = result;
-              log('called hello waiting for blocks', result);
-            });
-
-            $("#contractAddress").val(myContract.address);
-            $("#killContract").prop('disabled', false);
-
-
-            var filter = web3.eth.filter({toBlock: 'latest', address: myContract.address, 'topics':null});
-            filter.watch(function (err, result) {
-              log('startBlocknumber on watch', startBlockNumber);
-              log('filtering', result, err);
-            });
-
-            log(instance);
-            log("running hello world", instance.helloWorld());
+            callContract(myContract);
           }
         }
       });
