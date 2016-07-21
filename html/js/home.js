@@ -51,8 +51,6 @@ jQuery(function ($) {
 
       function getAddress(myContract) {
         log("transactionHash", myContract.transactionHash) // The hash of the transaction, which deploys the contract
-
-        log('getting blockNumber');
         web3.eth.getBlockNumber(function (err, result) {
           log('the blockNumber when we get the transactionHash', result);
         });
@@ -71,7 +69,6 @@ jQuery(function ($) {
         $("#contractAddress").val(myContract.address);
         $("#killContract").prop('disabled', false);
 
-
         var filter = web3.eth.filter({toBlock: 'latest', address: myContract.address, 'topics': null});
         filter.watch(function (err, result) {
           log('startBlocknumber on watch', startBlockNumber);
@@ -87,15 +84,16 @@ jQuery(function ($) {
         gas: 300000,
         from: $("#coin").val(),
       }, function (err, myContract) {
-        log(err, myContract);
-        // from offical docs at https://github.com/ethereum/wiki/wiki/JavaScript-API#web3ethcontract
-        if(!err) {
-          // e.g. check tx hash on the first call (transaction send)
-          if(!myContract.address) {
-            getAddress(myContract);
-          } else { // check address on the second call (contract deployed)
-            callContract(myContract);
-          }
+        if (err) {
+          log('found error', err);
+          return;
+        }
+
+        if(!myContract.address) {
+          getAddress(myContract);
+        } else { // check address on the second call (contract deployed)
+          console.log('myContract', myContract);
+          callContract(myContract);
         }
       });
     });
