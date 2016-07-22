@@ -14,9 +14,17 @@ contract TestContract is abstract {
     return "hello world";
   }
 
+  function noArgsNoReturns() {
+  }
+
+  function noArgsReturnString() returns (bytes32) {
+    return "a string";
+  }
+
   function () {
     throw;
   }
+
   function kill() {
     selfdestruct(owner);
   }
