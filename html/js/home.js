@@ -5,10 +5,19 @@ var instance;
 jQuery(function ($) {
   var coin;
 
+  var logerr = function () {
+    console.info("error from: \n", arguments.callee.caller.toString());
+    console.info.apply(console, arguments);
+    var oldLog = $("#log").text();
+    $("#log").text(JSON.stringify(arguments) + " \n" + oldLog);
+  };
+
   var log = function () {
     console.info.apply(console, arguments);
-    $("#log").append(JSON.stringify(arguments) + " \n")
+    var oldLog = $("#log").text();
+    $("#log").text(JSON.stringify(arguments) + " \n" + oldLog);
   };
+
   var showBalance = function () {
     var bal = eth.getBalance(coin);
     $("#balanceHeader").text("Current balance is: ");
@@ -52,7 +61,7 @@ jQuery(function ($) {
       function getAddress(myContract) {
         log("transactionHash", myContract.transactionHash) // The hash of the transaction, which deploys the contract
         web3.eth.getBlockNumber(function (err, result) {
-          log('the blockNumber when we get the transactionHash', result);
+          log('the blockNumber when we got the transactionHash', result);
         });
       }
 
@@ -85,7 +94,7 @@ jQuery(function ($) {
         from: $("#coin").val(),
       }, function (err, myContract) {
         if (err) {
-          log('found error', err);
+          logerr('found error', err);
           return;
         }
 
