@@ -5,6 +5,8 @@ var instance;
 jQuery(function ($) {
   var coin;
 
+  $("#killContract").prop('disabled', false);
+
   var logerr = function () {
     console.info("error from: \n", arguments.callee.caller.toString());
     console.info.apply(console, arguments);
