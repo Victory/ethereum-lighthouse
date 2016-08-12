@@ -7,12 +7,38 @@
     <script src="/components/jquery/dist/jquery.min.js"></script>
 </head>
 <body>
+<h3>Enter code from parity</h3>
 <textarea id="abi"></textarea>
 
+<div id="interface" style="display:none;">
+    <h3 id="interfaceTitle">Interface not found</h3>
+    <div id="functionPrototype">
+        <p class="functionName"></p>
+        <div class="inputList" style="padding-left:30px; color:#888;">
+            <div id="inputPrototype">
+                <label>
+                    <span class="inputTitle">Some Function</span>
+                    <input type="text" placeholder="input type">
+                </label>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    <p id="error"></p>
+</div>
 <script>
     $("#abi").on('input', function () {
+        $("#error").text("");
+
         var val = $(this).val();
-        jsify(val);
+        try {
+            var abi = jsify(val);
+        } catch (e) {
+            $("#error").text(e);
+            return;
+        }
+        makeHtmlInterface(abi);
     });
 </script>
 </body>
