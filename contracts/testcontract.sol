@@ -1,8 +1,9 @@
-
 contract abstract {}
 
 contract TestContract is abstract {
   address owner;
+  int64 num = 0;
+
   event SaidHello(string msg);
 
   function TestContract() {
@@ -27,5 +28,9 @@ contract TestContract is abstract {
 
   function kill() {
     selfdestruct(owner);
+  }
+
+  function changeNum(int32 newNum){
+    num = newNum;
   }
 }

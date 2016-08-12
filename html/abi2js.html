@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ABI to Javascript</title>
+    <script src="/js/abi2js.js"></script>
+    <script src="/components/jquery/dist/jquery.min.js"></script>
+</head>
+<body>
+<textarea id="abi"></textarea>
+
+<script>
+    $("#abi").on('input', function () {
+        var val = $(this).val();
+        jsify(val);
+    });
+</script>
+</body>
+</html>
