@@ -3,3 +3,20 @@
   margin:3px;
   padding:4px;
 }
+
+.results {
+  width: 700px;
+}
+
+.hash {
+  width: 350px;
+}
+
+.contract {
+  width:700px;
+  height:100px;
+}
+
+.kill-box {
+  margin-top: 10px;
+}

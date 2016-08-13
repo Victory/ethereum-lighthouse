@@ -3,6 +3,8 @@ contract abstract {}
 contract TestContract is abstract {
   address owner;
   int64 num = 0;
+  int32 varInt32 = 0;
+  uint varUint = 0;
 
   event SaidHello(string msg);
 
@@ -38,6 +40,16 @@ contract TestContract is abstract {
     return num;
   }
 
-  function multArgs(int32 arg1, uint arg2) {
+  function multiArgs(int32 arg1, uint arg2) {
+    varInt32 = arg1;
+    varUint = arg2;
+  }
+
+  function getVarInt32() returns (int32) {
+    return varInt32;
+  }
+
+  function getVarUint() returns (uint) {
+    return varUint;
   }
 }

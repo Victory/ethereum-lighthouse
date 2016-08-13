@@ -56,7 +56,8 @@ jQuery(function ($) {
         return;
       }
       var abi = data.contracts.TestContract.abi;
-      $("#compileResults").text(JSON.stringify(data));
+      $("#compileResults").val(JSON.stringify(data));
+      $("#abiResults").val(abi);
       log(eth.contract(abi));
       var TestContract = eth.contract(JSON.parse(abi));
 

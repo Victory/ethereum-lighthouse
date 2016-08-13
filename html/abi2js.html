@@ -45,12 +45,12 @@
 
         var val = $(this).val();
         try {
-            var abi = jsify(val);
+            var abi = abi2js.jsify(val);
         } catch (e) {
             $error.text(e);
             return;
         }
-        makeHtmlInterface(abi);
+        abi2js.makeHtmlInterface(abi);
     });
 </script>
 </body>

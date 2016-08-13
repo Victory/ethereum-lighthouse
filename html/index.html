@@ -4,43 +4,39 @@
    <script src="/components/jquery/dist/jquery.min.js"></script>
    <script src="/components/web3/dist/web3.js"></script>
    <script src="/js/home.js"></script>
+   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
    <div class="header">
-      <h2>Testing lighhouse</h2>
-      <div style="float:right;width:800px;height: 800px">
+      <h2>Contract Compiler</h2>
+      <div style="float:right;width:800px;height: 400px">
          <textarea id="log" style="width:100%;height:100%;overflow-x:scroll;word-wrap: normal;white-space:pre;"></textarea>
+         <div>
+            <table>
+               <tr>
+                  <td id="balanceHeader"></td>
+                  <td id="balance"></td>
+               </tr>
+               <tr>
+                  <td>Hash Rate:</td>
+                  <td id="hashRate"></td>
+               </tr>
+            </table>
+         </div>
       </div>
       <div>
          <label>
-            Coin: <input type="text" id="coin" size="40">
+            Coin: <input type="text" id="coin" class="hash">
          </label>
-         <div>
-            <button id="setCoin">Set Coin Hash</button>
-         </div>
+         <button id="setCoin">Set Coin Hash</button>
       </div>
 
-      <div>
-         <table>
-
-            <tr>
-               <td id="balanceHeader"></td>
-               <td id="balance"></td>
-            </tr>
-            <tr>
-               <td>Hash Rate:</td>
-               <td id="hashRate"></td>
-            </tr>
-         </table>
-      </div>
 
       <div id="contracts">
          <form id="contractForm" method="POST" action="/solc">
             <div>
-            <label>Use "It's All Text" browser plugin to enter contract code</label>
-               <div>
-                  <textarea class="contract" name="contract" style="width:500px;height:100px;"></textarea>
-               </div>
+               <h3>Contract Source</h3>
+               <textarea class="contract" name="contract"></textarea>
             </div>
             <button type="submit">Compile</button>
          </form>
@@ -49,13 +45,10 @@
          <p id="compileError"></p>
       </div>
       <div>
-         <textarea id="compileResults" style="width:500px;height:100px;"></textarea>
-      </div>
-
-      <div>
-         <input id="contractAddress" style="width: 300px">
-      </div>
-      <div>
+         <h3>Compiled</h3>
+         <input id="abiResults" class="results" placeholder="abi">
+         <input id="compileResults" class="results" placeholder="full solc results">
+         <input id="contractAddress" class="hash" placeholder="contract address">
          <button id="killContract" disabled>Kill Contract</button>
       </div>
    </div>
