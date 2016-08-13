@@ -1,45 +1,57 @@
 /**
  *  Uses the abi object to create HTML Elements
- * @param abi
- * @param $dom {$interface: etc...}
+ * @param abiInfo
+ * @param $dom object {$interface: etc...}
  */
-var abiToHtml = function (abi, $dom) {
-
-  console.log($dom);
-
-  $dom.$interface.css('display', 'block');
+var abiToHtml = function (abiInfo, $dom) {
 
   var $function;
-
-  console.log(abi);
   var descriptor;
   var input;
   var $input;
+  var $form;
+  var inputs;
+  var abi = abiInfo.abi;
+  var name = abiInfo.name;
+
+  $dom.$interfaceTitle.text(name);
+  $dom.$interface.css('display', 'block');
+
+  abi = abi.sort(function (lhs, rhs) {
+    return lhs.name > rhs.name;
+  });
 
   for (kk in abi) {
-    if (abi.isPrototypeOf(kk)) {
+    if (!abi.hasOwnProperty(kk)) {
       continue;
     }
+
     descriptor = abi[kk];
 
     if (descriptor.type === "function") {
-      console.log(descriptor.name);
       $function = $dom.$function.clone();
       $function.find(".functionName").text(descriptor.name);
 
-      for (jj in descriptor.inputs) {
-        if (descriptor.inputs.isPrototypeOf[jj]) {
+      inputs = descriptor.inputs;
+      for (jj in inputs) {
+        if (!inputs.hasOwnProperty(jj)) {
           continue;
         }
-        input = descriptor.inputs[jj];
+        input = inputs[jj];
         $input = $dom.$input.clone();
-        console.log($input, input, input.name);
 
+        $input.find("input").attr('name', jj);
         $input.find("input").attr('placeholder', input.type);
         $input.find(".inputTitle").text(input.name + ":");
         $function.find(".inputList").append($input);
       }
 
+      $form = $function.find("form");
+      $form.attr('el-function-name', descriptor.name);
+      $form.submit(function (evt) {
+        evt.preventDefault();
+        console.log($(this).serialize());
+      });
       $dom.$interface.append($function);
     }
   }
@@ -53,7 +65,7 @@ var getContract = function(obj) {
   if (typeof obj.contracts !== "undefined") {
     key =  Object.keys(obj.contracts)[0];
     abi = obj.contracts[key].abi;
-    var abi = JSON.parse(abi);
+    abi = JSON.parse(abi);
   } else {
   }
 
@@ -74,19 +86,19 @@ var makeHtmlInterface = function(abiInfo) {
   var $tmp;
 
   $tmp = $("#inputPrototype");
-  $tmp.attr("id", "");
+  $tmp.removeAttr("id");
   var $input = $tmp.clone();
   $tmp.remove();
 
   $tmp = $("#functionPrototype");
-  $tmp.attr("id", "");
+  $tmp.removeAttr("id");
   var $function = $tmp.clone();
   $tmp.remove();
 
-  $interfaceTitle.text(abiInfo.name);
-  abiToHtml(abiInfo.abi, {
+  abiToHtml(abiInfo, {
     $interface: $interface,
     $input: $input,
-    $function: $function
+    $function: $function,
+    $interfaceTitle: $interfaceTitle
   });
 };

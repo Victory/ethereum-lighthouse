@@ -30,7 +30,14 @@ contract TestContract is abstract {
     selfdestruct(owner);
   }
 
-  function changeNum(int32 newNum){
+  function setNum(int64 newNum){
     num = newNum;
+  }
+
+  function getNum() returns (int64) {
+    return num;
+  }
+
+  function multArgs(int32 arg1, uint arg2) {
   }
 }

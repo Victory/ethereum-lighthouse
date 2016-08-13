@@ -5,6 +5,7 @@
     <title>ABI to Javascript</title>
     <script src="/js/abi2js.js"></script>
     <script src="/components/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 <h3>Enter code from parity</h3>
@@ -12,16 +13,26 @@
 
 <div id="interface" style="display:none;">
     <h3 id="interfaceTitle">Interface not found</h3>
-    <div id="functionPrototype">
-        <p class="functionName"></p>
-        <div class="inputList" style="padding-left:30px; color:#888;">
-            <div id="inputPrototype">
-                <label>
-                    <span class="inputTitle">Some Function</span>
-                    <input type="text" placeholder="input type">
-                </label>
+    <div id="functionPrototype" class="functionBox">
+        <form el-function-name>
+            <p class="functionName"></p>
+            <div class="inputList" style="padding-left:30px; color:#888;">
+                <div id="inputPrototype">
+                    <label>
+                        <span class="inputTitle">Some Function</span>
+                        <input type="text" placeholder="input type">
+                    </label>
+                </div>
             </div>
-        </div>
+            <div>
+                <button type="submit">
+                    Run
+                </button>
+            </div>
+            <div>
+                <p class="results"></p>
+            </div>
+        </form>
     </div>
 </div>
 <div>
@@ -29,13 +40,14 @@
 </div>
 <script>
     $("#abi").on('input', function () {
-        $("#error").text("");
+        var $error = $("#error");
+        $error.text("");
 
         var val = $(this).val();
         try {
             var abi = jsify(val);
         } catch (e) {
-            $("#error").text(e);
+            $error.text(e);
             return;
         }
         makeHtmlInterface(abi);
