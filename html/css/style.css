@@ -6,6 +6,7 @@
 
 .results {
   width: 700px;
+  display:block;
 }
 
 .hash {
@@ -19,4 +20,18 @@
 
 .kill-box {
   margin-top: 10px;
+}
+
+.logBox {
+  float:right;
+  width:800px;
+  height:200px
+}
+
+#log {
+  width:100%;
+  height:80%;
+  overflow-x:scroll;
+  word-wrap:normal;
+  white-space:pre;
 }

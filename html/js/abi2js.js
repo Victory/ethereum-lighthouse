@@ -76,9 +76,16 @@ var abi2js = (function () {
     }
   };
 
-  var jsify = function (jsonFromParity) {
-    var abiObj = JSON.parse(jsonFromParity);
-    return getContract(abiObj);
+  /**
+   * Takes either a string that can be parsed with JSON.parse, or a object with obj.contracts
+   * @param jsonFromParityOrDataFromParity string|object
+   * @returns {{name, abi}}
+   */
+  var jsify = function (jsonFromParityOrDataFromParity) {
+    if (typeof jsonFromParityOrDataFromParity === "string") {
+      jsonFromParityOrDataFromParity = JSON.parse(jsonFromParityOrDataFromParity);
+    }
+    return getContract(jsonFromParityOrDataFromParity);
   };
 
   var makeHtmlInterface = function(abiInfo) {
