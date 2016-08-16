@@ -110,7 +110,7 @@ jQuery(function ($) {
       }
 
       contract.new({
-        data: "0x" + data.contracts.TestContract.bin,
+        data: "0x" + binInfo.bin,
         gas: 300000,
         from: $("#coin").val()
       }, function (err, myContract) {
