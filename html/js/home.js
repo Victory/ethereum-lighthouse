@@ -89,19 +89,20 @@ jQuery(function ($) {
         log("theAddress", myContract.address); // the contract address
         instance = eth.contract(abi).at(myContract.address);
         abi2js.makeHtmlInterface(abiInfo, instance);
+
+        /*
         var startBlockNumber;
         web3.eth.getBlockNumber(function (err, result) {
-          instance.helloWorld();
           startBlockNumber = result;
           log('called hello waiting for blocks', result);
         });
+        */
 
         $contractAddress.val(myContract.address);
         $killContract.prop('disabled', false);
 
         var filter = web3.eth.filter({toBlock: 'latest', address: myContract.address, 'topics': null});
         filter.watch(function (err, result) {
-          log('startBlocknumber on watch', startBlockNumber);
           log('filtering', result, err);
         });
 

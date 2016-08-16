@@ -8,13 +8,14 @@ var abi2js = (function () {
     $form.attr('el-function-name', descriptor.name);
     $form.submit(function (evt) {
       evt.preventDefault();
+      console.log('calling', instance[descriptor.name].call());
       console.log($(this).serialize());
     });
-  }
+  };
 
   /**
    *  Uses the abi object to create HTML Elements
-   * @param contractInfo {abiInfo: ,binIinfo}
+   * @param contractInfo object {abiInfo: {},binIinfo: {}}
    * @param $dom object {$interface: etc...}
    * @param instance
    */
