@@ -30,6 +30,10 @@ var abi2js = (function () {
       descriptor = abi[kk];
 
       if (descriptor.type === "function") {
+        if (descriptor.name == abiInfo.name) {
+          continue;
+        }
+
         $function = $dom.$function.clone();
         $function.find(".functionName").text(descriptor.name);
 
