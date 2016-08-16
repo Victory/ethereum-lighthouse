@@ -8,8 +8,11 @@ var abi2js = (function () {
     $form.attr('el-function-name', descriptor.name);
     $form.submit(function (evt) {
       evt.preventDefault();
-      console.log('calling', instance[descriptor.name].call());
-      console.log($(this).serialize());
+      var args = [];
+      $("[name]", this).each(function () {
+        args.push($(this).val()) ;
+      });
+      console.log('calling', instance[descriptor.name].apply(undefined, args));
     });
   };
 
@@ -107,7 +110,7 @@ var abi2js = (function () {
       name: key,
       bin: bin
     }
-  }
+  };
 
 
   /**
