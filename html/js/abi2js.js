@@ -1,10 +1,24 @@
 var abi2js = (function () {
+
+  var bindMethod = function ($form, descriptor, instance) {
+    if (typeof instance === "undefined") {
+      return;
+    }
+
+    $form.attr('el-function-name', descriptor.name);
+    $form.submit(function (evt) {
+      evt.preventDefault();
+      console.log($(this).serialize());
+    });
+  }
+
   /**
    *  Uses the abi object to create HTML Elements
-   * @param abiInfo
+   * @param contractInfo {abiInfo: ,binIinfo}
    * @param $dom object {$interface: etc...}
+   * @param instance
    */
-  var abiToHtml = function (abiInfo, $dom) {
+  var abiToHtml = function (contractInfo, $dom, instance) {
 
     var $function;
     var descriptor;
@@ -12,8 +26,8 @@ var abi2js = (function () {
     var $input;
     var $form;
     var inputs;
-    var abi = abiInfo.abi;
-    var name = abiInfo.name;
+    var abi = contractInfo.abi;
+    var name = contractInfo.name;
 
     $dom.$interfaceTitle.text(name);
     $dom.$interface.css('display', 'block');
@@ -30,7 +44,7 @@ var abi2js = (function () {
       descriptor = abi[kk];
 
       if (descriptor.type === "function") {
-        if (descriptor.name == abiInfo.name) {
+        if (descriptor.name === contractInfo.name) {
           continue;
         }
 
@@ -52,15 +66,11 @@ var abi2js = (function () {
         }
 
         $form = $function.find("form");
-        $form.attr('el-function-name', descriptor.name);
-        $form.submit(function (evt) {
-          evt.preventDefault();
-          console.log($(this).serialize());
-        });
+        bindMethod($form, descriptor, instance);
+
         $dom.$interface.append($function);
       }
     }
-
   };
 
   var getContract = function(obj) {
@@ -114,7 +124,12 @@ var abi2js = (function () {
     };
   };
 
-  var makeHtmlInterface = function(abiInfo) {
+  /**
+   * Creates an html interface for the contract, bound to the instance
+   * @param abiInfo
+   * @param instance
+   */
+  var makeHtmlInterface = function(abiInfo, instance) {
     var $interfaceTitle = $("#interfaceTitle");
     var $interface = $("#interface");
     var $tmp;
@@ -129,12 +144,15 @@ var abi2js = (function () {
     var $function = $tmp.clone();
     $tmp.remove();
 
-    abiToHtml(abiInfo, {
-      $interface: $interface,
-      $input: $input,
-      $function: $function,
-      $interfaceTitle: $interfaceTitle
-    });
+    abiToHtml(
+      abiInfo,
+      {
+        $interface: $interface,
+        $input: $input,
+        $function: $function,
+        $interfaceTitle: $interfaceTitle
+      },
+      instance);
   };
 
   return {

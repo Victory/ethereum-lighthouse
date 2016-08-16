@@ -71,7 +71,6 @@ jQuery(function ($) {
       var abiInfo = contractInfo.abiInfo;
       var binInfo = contractInfo.binInfo;
 
-      abi2js.makeHtmlInterface(abiInfo);
       var abi = abiInfo.abi;
 
       $compileResults.val(JSON.stringify(data));
@@ -89,6 +88,7 @@ jQuery(function ($) {
       function callContract(myContract) {
         log("theAddress", myContract.address); // the contract address
         instance = eth.contract(abi).at(myContract.address);
+        abi2js.makeHtmlInterface(abiInfo, instance);
         var startBlockNumber;
         web3.eth.getBlockNumber(function (err, result) {
           instance.helloWorld();
