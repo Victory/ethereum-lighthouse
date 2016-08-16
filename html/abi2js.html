@@ -45,7 +45,7 @@
 
         var val = $(this).val();
         try {
-            var abi = abi2js.jsify(val);
+            var abi = abi2js.jsify(val).abi;
         } catch (e) {
             $error.text(e);
             return;

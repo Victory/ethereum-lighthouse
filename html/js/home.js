@@ -12,7 +12,7 @@ jQuery(function ($) {
   $compileResults.val('');
   $abiResults.val('');
   $contractAddress.val('');
-  $killContract.prop('disabled', false);
+  $killContract.prop('disabled', true);
 
   var $log = $("#log");
 
@@ -67,15 +67,17 @@ jQuery(function ($) {
         $("#compileError").text(data);
         return;
       }
-      var abiInfo = abi2js.jsify(data);
-      abi2js.makeHtmlInterface(abiInfo);
+      var contractInfo = abi2js.jsify(data);
+      var abiInfo = contractInfo.abiInfo;
+      var binInfo = contractInfo.binInfo;
 
+      abi2js.makeHtmlInterface(abiInfo);
       var abi = abiInfo.abi;
 
       $compileResults.val(JSON.stringify(data));
       $abiResults.val(abi);
       log(eth.contract(abi));
-      var TestContract = eth.contract(abi);
+      var contract = eth.contract(abi);
 
       function getAddress(myContract) {
         log("transactionHash", myContract.transactionHash); // The hash of the transaction, which deploys the contract
@@ -107,7 +109,7 @@ jQuery(function ($) {
         log("running hello world", instance.helloWorld());
       }
 
-      TestContract.new({
+      contract.new({
         data: "0x" + data.contracts.TestContract.bin,
         gas: 300000,
         from: $("#coin").val()
@@ -131,7 +133,9 @@ jQuery(function ($) {
         return;
       }
       instance.kill();
-      $("#contractAddress").val('');
+      $compileResults.val('');
+      $abiResults.val('');
+      $contractAddress.val('');
       $killContract.prop('disabled', true);
     });
   });

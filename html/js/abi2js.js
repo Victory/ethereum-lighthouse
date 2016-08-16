@@ -68,6 +68,7 @@ var abi2js = (function () {
       abi = obj.contracts[key].abi;
       abi = JSON.parse(abi);
     } else {
+      throw "getContract could not find contracts in obj"
     }
 
     return {
@@ -75,6 +76,24 @@ var abi2js = (function () {
       abi: abi
     }
   };
+
+  var getContractBin = function (obj) {
+    var bin;
+    var key;
+
+    if (typeof obj.contracts !== "undefined") {
+      key =  Object.keys(obj.contracts)[0];
+      bin = obj.contracts[key].bin;
+    } else {
+      throw "getContract could not find contracts in obj"
+    }
+
+    return {
+      name: key,
+      bin: bin
+    }
+  }
+
 
   /**
    * Takes either a string that can be parsed with JSON.parse, or a object with obj.contracts
@@ -85,7 +104,10 @@ var abi2js = (function () {
     if (typeof jsonFromParityOrDataFromParity === "string") {
       jsonFromParityOrDataFromParity = JSON.parse(jsonFromParityOrDataFromParity);
     }
-    return getContract(jsonFromParityOrDataFromParity);
+    return {
+      abiInfo: getContract(jsonFromParityOrDataFromParity),
+      binInfo: getContractBin(jsonFromParityOrDataFromParity)
+    };
   };
 
   var makeHtmlInterface = function(abiInfo) {
