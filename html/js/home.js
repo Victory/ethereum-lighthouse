@@ -112,12 +112,11 @@ jQuery(function ($) {
         });
 
         log(instance);
-        log("running hello world", instance.helloWorld());
       }
 
       contract.new({
         data: "0x" + binInfo.bin,
-        gas: 300000,
+        gas: 3000000,
         from: $("#coin").val()
       }, function (err, myContract) {
         if (err) {
