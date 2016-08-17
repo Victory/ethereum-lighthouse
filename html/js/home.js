@@ -8,11 +8,13 @@ jQuery(function ($) {
   var $contractAddress = $("#contractAddress");
   var $abiResults = $("#abiResults");
   var $killContract = $("#killContract");
+  var $compileButton = $("#compileButton");
 
   $compileResults.val('');
   $abiResults.val('');
   $contractAddress.val('');
   $killContract.prop('disabled', true);
+  $compileButton.prop('disabled', false);
 
   var $log = $("#log");
 
@@ -21,7 +23,7 @@ jQuery(function ($) {
     console.info.apply(console, arguments);
 
     var oldLog = $log.text();
-    $log.text(JSON.stringify(arguments) + " \n" + oldLog);
+    $log.text(arguments[1] + " \n" + oldLog);
   };
 
   var log = function () {
@@ -51,6 +53,9 @@ jQuery(function ($) {
 
   $("#contractForm").submit(function (evt) {
     evt.preventDefault();
+
+    $compileButton.text("compiling ...");
+    $compileButton.prop('disabled', true);
 
     var $coin = $("#coin");
 
@@ -116,6 +121,10 @@ jQuery(function ($) {
         from: $("#coin").val()
       }, function (err, myContract) {
         if (err) {
+
+          $compileButton.text("Compile");
+          $compileButton.prop('disabled', false);
+
           logerr('found error', err);
           return;
         }
@@ -123,13 +132,16 @@ jQuery(function ($) {
         if(!myContract.address) {
           getAddress(myContract);
         } else { // check address on the second call (contract deployed)
-          console.log('myContract', myContract);
+          log('myContract', myContract);
           callContract(myContract);
         }
       });
     });
 
     $killContract.click(function () {
+      $compileButton.text("Compile");
+      $compileButton.prop('disabled', false);
+
       if (!instance) {
         return;
       }
