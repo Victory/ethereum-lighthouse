@@ -93,7 +93,7 @@ jQuery(function ($) {
       function callContract(myContract) {
         log("theAddress", myContract.address); // the contract address
         instance = eth.contract(abi).at(myContract.address);
-        abi2js.makeHtmlInterface(abiInfo, instance);
+        abi2js.makeHtmlInterface(abiInfo, instance, web3);
 
         /*
         var startBlockNumber;

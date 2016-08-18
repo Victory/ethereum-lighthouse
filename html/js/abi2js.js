@@ -1,6 +1,19 @@
 var abi2js = (function () {
 
-  var bindMethod = function ($form, descriptor, instance) {
+  /**
+   * options:
+   * $form
+   *  - descriptor
+   *  - instance
+   *  - web3
+   * @param options object
+   */
+  var bindMethod = function (options) {
+    var $form = options.$form;
+    var descriptor = options.descriptor;
+    var instance = options.instance;
+    var web3 = options.web3;
+
     if (typeof instance === "undefined") {
       return;
     }
@@ -12,7 +25,16 @@ var abi2js = (function () {
       $("[name]", this).each(function () {
         args.push($(this).val()) ;
       });
-      console.log('calling', instance[descriptor.name].apply(undefined, args));
+
+      var txHash = instance[descriptor.name].apply(undefined, args);
+      $form.find(".hash").val(txHash);
+
+      var filter = web3.eth.filter('latest');
+      filter.watch(function (err,result){
+        eth.getTransactionReceipt(txHash, function (transErr, transResult) {
+          console.info("receipt", transErr, transResult);
+        })
+      });
     });
   };
 
@@ -20,9 +42,10 @@ var abi2js = (function () {
    *  Uses the abi object to create HTML Elements
    * @param contractInfo object {abiInfo: {},binIinfo: {}}
    * @param $dom object {$interface: etc...}
-   * @param instance
+   * @param instance object hash method of the function
+   * @param web3
    */
-  var abiToHtml = function (contractInfo, $dom, instance) {
+  var abiToHtml = function (contractInfo, $dom, instance, web3) {
 
     var $function;
     var descriptor;
@@ -70,7 +93,12 @@ var abi2js = (function () {
         }
 
         $form = $function.find("form");
-        bindMethod($form, descriptor, instance);
+        bindMethod({
+          $form: $form,
+          descriptor: descriptor,
+          instance: instance,
+          web3: web3
+        });
 
         $dom.$interface.append($function);
       }
@@ -133,7 +161,7 @@ var abi2js = (function () {
    * @param abiInfo
    * @param instance
    */
-  var makeHtmlInterface = function(abiInfo, instance) {
+  var makeHtmlInterface = function(abiInfo, instance, web3) {
     var $interfaceTitle = $("#interfaceTitle");
     var $interface = $("#interface");
     var $tmp;
@@ -156,7 +184,9 @@ var abi2js = (function () {
         $function: $function,
         $interfaceTitle: $interfaceTitle
       },
-      instance);
+      instance,
+      web3
+    );
   };
 
   return {
