@@ -9,6 +9,8 @@ jQuery(function ($) {
   var $abiResults = $("#abiResults");
   var $killContract = $("#killContract");
   var $compileButton = $("#compileButton");
+  var $clearButton = $("#clearButton");
+  var $contract = $("#contract");
 
   $compileResults.val('');
   $abiResults.val('');
@@ -47,7 +49,13 @@ jQuery(function ($) {
     $("#hashRate").text(result);
   });
 
-  $("textarea.contract").on('input, blur', function () {
+  $clearButton.click(function () {
+    $compileButton.text("Compile");
+    $compileButton.prop('disabled', false);
+    $contract.val('');
+  });
+
+  $contract.on('input, blur', function () {
     $("#compileError").text("");
   });
 
@@ -65,7 +73,7 @@ jQuery(function ($) {
     }
     web3.eth.defaultAccount = $coin.val();
 
-    var src = $(this).find("textarea.contract").val();
+    var src = $contract.val();
     $.post("/solc", {src: src}, function (data) {
       lastCall = data;
       if (typeof data === "string") {
