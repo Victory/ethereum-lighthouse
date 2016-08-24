@@ -11,7 +11,7 @@
 
   <link rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap.min.css">
 
-  <!-- <link rel="stylesheet" href="/css/style.css"> -->
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
@@ -19,27 +19,57 @@
   <div class="row">
     <div class="col-xs-12">
       <h2>Contract Compiler</h2>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4">
-
-      <div class="logBox">
-        <textarea id="log"></textarea>
-        <div>
-          <table>
-            <tr>
-              <td id="balanceHeader"></td>
-              <td id="balance"></td>
-            </tr>
-          </table>
-        </div>
-      </div>
       <div>
         <label>
           Coin: <input type="text" id="coin" class="hash">
         </label>
         <button id="setCoin">Set Coin Hash</button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="row">
+
+    <div class="col-md-8">
+      <div id="contracts">
+        <form id="contractForm" method="POST" action="/solc">
+          <div>
+            <h3>Contract Source</h3>
+            <textarea class="contract" id="contract" name="contract"></textarea>
+          </div>
+          <button type="submit" id="compileButton">Compile</button>
+          <button type="button" id="clearButton">Clear</button>
+        </form>
+      </div>
+      <div>
+        <p id="compileError"></p>
+      </div>
+      <div>
+        <h3>Compiled</h3>
+        <input id="abiResults" class="results" placeholder="abi">
+        <input id="compileResults" class="results" placeholder="full solc results">
+        <input id="contractAddress" class="hash" placeholder="contract address">
+        <button id="killContract" disabled>Kill Contract</button>
+      </div>
+    </div>
+        <div class="col-md-4">
+      <div class="row">
+        <div class="col-xs-12">
+          <textarea id="log"></textarea>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-12">
+          <div>
+            <table>
+              <tr>
+                <td id="balanceHeader"></td>
+                <td id="balance"></td>
+              </tr>
+            </table>
+          </div>
+        </div>
       </div>
 
       <div class="logBox">
@@ -70,28 +100,6 @@
             </form>
           </div>
         </div>
-      </div>
-    </div>
-    <div class="col-md-8">
-      <div id="contracts">
-        <form id="contractForm" method="POST" action="/solc">
-          <div>
-            <h3>Contract Source</h3>
-            <textarea class="contract" id="contract" name="contract"></textarea>
-          </div>
-          <button type="submit" id="compileButton">Compile</button>
-          <button type="button" id="clearButton">Clear</button>
-        </form>
-      </div>
-      <div>
-        <p id="compileError"></p>
-      </div>
-      <div>
-        <h3>Compiled</h3>
-        <input id="abiResults" class="results" placeholder="abi">
-        <input id="compileResults" class="results" placeholder="full solc results">
-        <input id="contractAddress" class="hash" placeholder="contract address">
-        <button id="killContract" disabled>Kill Contract</button>
       </div>
     </div>
   </div><!-- main /.row -->
