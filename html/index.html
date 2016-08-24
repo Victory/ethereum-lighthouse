@@ -1,84 +1,100 @@
 <html>
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>Ethereum Lighthouse</title>
+
   <script src="/components/jquery/dist/jquery.min.js"></script>
   <script src="/components/web3/dist/web3.js"></script>
   <script src="/js/abi2js.js"></script>
   <script src="/js/home.js"></script>
-  <link rel="stylesheet" href="/css/style.css">
+
+  <link rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap.min.css">
+
+  <!-- <link rel="stylesheet" href="/css/style.css"> -->
 </head>
 <body>
-<div class="header">
-  <h2>Contract Compiler</h2>
 
-  <div class="logBox">
-    <textarea id="log"></textarea>
-    <div>
-      <table>
-        <tr>
-          <td id="balanceHeader"></td>
-          <td id="balance"></td>
-        </tr>
-      </table>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12">
+      <h2>Contract Compiler</h2>
     </div>
   </div>
-  <div>
-    <label>
-      Coin: <input type="text" id="coin" class="hash">
-    </label>
-    <button id="setCoin">Set Coin Hash</button>
-  </div>
+  <div class="row">
+    <div class="col-md-4">
 
- <div class="logBox">
-    <div id="interface" style="display:none;">
-      <h3 id="interfaceTitle">Interface not found</h3>
-      <div id="functionPrototype" class="functionBox">
-        <form el-function-name>
-          <p class="functionName"></p>
-          <div class="inputList" style="padding-left:30px; color:#888;">
-            <div id="inputPrototype">
-              <label>
-                <span class="inputTitle">Some Function</span>
-                <input type="text" placeholder="input type">
-              </label>
-            </div>
+      <div class="logBox">
+        <textarea id="log"></textarea>
+        <div>
+          <table>
+            <tr>
+              <td id="balanceHeader"></td>
+              <td id="balance"></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div>
+        <label>
+          Coin: <input type="text" id="coin" class="hash">
+        </label>
+        <button id="setCoin">Set Coin Hash</button>
+      </div>
+
+      <div class="logBox">
+        <div id="interface" style="display:none;">
+          <h3 id="interfaceTitle">Interface not found</h3>
+          <div id="functionPrototype" class="functionBox">
+            <form el-function-name>
+              <p class="functionName"></p>
+              <div class="inputList" style="padding-left:30px; color:#888;">
+                <div id="inputPrototype">
+                  <label>
+                    <span class="inputTitle">Some Function</span>
+                    <input type="text" placeholder="input type">
+                  </label>
+                </div>
+              </div>
+              <div>
+                <button type="submit">
+                  Run
+                </button>
+              </div>
+              <div>
+                <label class="transactionHash">Transaction Hash:
+                  <input class="hash">
+                </label>
+                <p class="results"></p>
+              </div>
+            </form>
           </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div id="contracts">
+        <form id="contractForm" method="POST" action="/solc">
           <div>
-            <button type="submit">
-              Run
-            </button>
+            <h3>Contract Source</h3>
+            <textarea class="contract" id="contract" name="contract"></textarea>
           </div>
-          <div>
-            <label class="transactionHash">Transaction Hash:
-              <input class="hash">
-            </label>
-            <p class="results"></p>
-          </div>
+          <button type="submit" id="compileButton">Compile</button>
+          <button type="button" id="clearButton">Clear</button>
         </form>
       </div>
-    </div>
-  </div>
-
-  <div id="contracts">
-    <form id="contractForm" method="POST" action="/solc">
       <div>
-        <h3>Contract Source</h3>
-        <textarea class="contract" id="contract" name="contract"></textarea>
+        <p id="compileError"></p>
       </div>
-      <button type="submit" id="compileButton">Compile</button>
-      <button type="button" id="clearButton">Clear</button>
-    </form>
-  </div>
-  <div>
-    <p id="compileError"></p>
-  </div>
-  <div>
-    <h3>Compiled</h3>
-    <input id="abiResults" class="results" placeholder="abi">
-    <input id="compileResults" class="results" placeholder="full solc results">
-    <input id="contractAddress" class="hash" placeholder="contract address">
-    <button id="killContract" disabled>Kill Contract</button>
-  </div>
-</div>
+      <div>
+        <h3>Compiled</h3>
+        <input id="abiResults" class="results" placeholder="abi">
+        <input id="compileResults" class="results" placeholder="full solc results">
+        <input id="contractAddress" class="hash" placeholder="contract address">
+        <button id="killContract" disabled>Kill Contract</button>
+      </div>
+    </div>
+  </div><!-- main /.row -->
+</div><!-- /.container -->
 </body>
 </html>
