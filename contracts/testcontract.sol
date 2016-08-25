@@ -7,7 +7,6 @@ contract TestContract is abstract {
   uint varUint = 0;
 
   event SaidHello(string greeting);
-  event GotNum(int64 theNum);
 
   function TestContract() {
     owner = msg.sender;
