@@ -36,8 +36,7 @@ jQuery(function ($) {
 
   var showBalance = function () {
     var bal = eth.getBalance(coin);
-    $("#balanceHeader").text("Current balance is: ");
-    $("#balance").text(web3.fromWei(bal, 'ether'));
+    log("Current balance is: " + bal + " ETH")
   };
 
   $("#setCoin").click(function () {
