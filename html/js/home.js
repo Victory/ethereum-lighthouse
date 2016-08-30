@@ -86,7 +86,7 @@ jQuery(function ($) {
       var abi = abiInfo.abi;
 
       $compileResults.val(JSON.stringify(data));
-      $abiResults.val(abi);
+      $abiResults.val(JSON.stringify(abi));
       log(eth.contract(abi));
       var contract = eth.contract(abi);
 
