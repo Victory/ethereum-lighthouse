@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Push Data</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Ethereum Lighthouse</title>
+
+  <script src="/components/jquery/dist/jquery.min.js"></script>
+  <script src="/components/web3/dist/web3.js"></script>
+  <script src="/js/abi2js.js"></script>
+  <script src="/js/push.js"></script>
+
+  <link rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="/css/style.css">
+
+</head>
+<body>
+<div class="container">
+
+  <div class="row">
+    <div class="col-xs-12">
+      <p>Runs the <code>pushVal</code> command at the contract address every 25 seconds.</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <label for="account">
+        <input id="account" placeholder="account to send from" class="hash">
+      </label>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <label for="address">
+        <input id="address" placeholder="address" class="hash">
+      </label>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <label for="abi">
+        <input id="abi" placeholder="abi" class="hash">
+      </label>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <button type="button" id="startButton">Start</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <ol id="logList" reversed>
+      </ol>
+    </div>
+  </div>
+</div>
+</body>
+</html>

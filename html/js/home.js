@@ -61,7 +61,7 @@ jQuery(function ($) {
   $("#contractForm").submit(function (evt) {
     evt.preventDefault();
 
-    $compileButton.text("compiling ...");
+    $compileButton.text("Publishing ...");
     $compileButton.prop('disabled', true);
 
     var $coin = $("#coin");
