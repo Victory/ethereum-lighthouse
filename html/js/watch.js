@@ -3,7 +3,6 @@
  */
 var web3 = new Web3(new Web3.providers.HttpProvider("/parity"));
 var eth = web3.eth;
-var howOftenToUpdate = 5000;
 
 jQuery(function ($) {
   var logFactory = function ($logList, isError) {
