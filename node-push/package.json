@@ -1,0 +1,26 @@
+{
+  "name": "node-push",
+  "version": "1.0.0",
+  "description": "Push data to ethereum lighthouse contracts",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Victory/ethereum-lighthouse.git"
+  },
+  "keywords": [
+    "ethereum",
+    "ethereum-lighthouse"
+  ],
+  "author": "Victory",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/Victory/ethereum-lighthouse/issues"
+  },
+  "homepage": "https://github.com/Victory/ethereum-lighthouse#readme",
+  "dependencies": {
+    "web3": "^0.17.0-alpha"
+  }
+}

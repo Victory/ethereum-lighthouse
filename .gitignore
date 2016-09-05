@@ -1,5 +1,5 @@
 test-net/eth-data*
 .idea/*
 node_modules/
-/node_modules/
 /html/components/
+/node-push/node_modules/
