@@ -15,8 +15,6 @@ module.exports.updateLighthouse = function (el) {
     });
 
     response.on('end', function () {
-      // TODO: push to contract
-      //console.log("updating lighthouse", mag.toString(16));
       var obj = JSON.parse(data);
 
       if (obj.features[0] == 0) {
@@ -38,8 +36,7 @@ module.exports.updateLighthouse = function (el) {
 
       console.log('Pushing mag', mag.toString(16));
     });
-
-  }
+  };
 
   http.request(options, callback).end();
 };
