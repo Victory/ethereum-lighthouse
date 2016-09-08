@@ -55,7 +55,7 @@ var readConfig = function () {
       config[key] = JSON.parse(value);
     } else if (key === "require") {
       if (value[0] !== "/") {
-        config[key] = path.join(__dirname, '..', value);
+        config[key] = path.join(__dirname, '..', 'beacons', value);
       } else {
         config[key] = value;
       }

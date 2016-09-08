@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/Victory/ethereum-lighthouse#readme",
   "dependencies": {
+    "vPromise": "0.3.0",
     "web3": "^0.17.0-alpha"
   }
 }

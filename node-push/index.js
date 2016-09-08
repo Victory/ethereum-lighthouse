@@ -6,8 +6,8 @@ fromAccount = process.argv[4];
 
 function usage() {
   console.error("Usage: \n" +
-    "  " + process.argv[1] + "http://host:port contractAddress wallet\n\n\n" +
-    path.basename("   " + process.argv[1]) + " http://127.0.0.1:8485/path 0xabf958ad64c65e7afa3badc2efc8327b1ce7fb8f 0xc8f958ad64c65e7afa3badc2efc8327b1ce7fb8f");
+    "  " + process.argv[1] + " http://host:port contractAddress wallet\n\n" +
+    path.basename("   " + process.argv[1]) + "  http://127.0.0.1:8485/path 0xabf958ad64c65e7afa3badc2efc8327b1ce7fb8f 0xc8f958ad64c65e7afa3badc2efc8327b1ce7fb8f");
 }
 
 function rand() {

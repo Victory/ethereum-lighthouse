@@ -1,6 +1,12 @@
 var http = require('http');
+var vPromise = require('vPromise');
 
 module.exports.updateLighthouse = function (el) {
+
+  console.log('this lighthouse is disabled');
+  process.exit(9);
+
+  var continuePromise = new vPromise();
 
   // Zoo in Tulsa Oklahoma, USA
   var options = {
@@ -31,6 +37,7 @@ module.exports.updateLighthouse = function (el) {
         },
         function (err, result) {
           console.log('calling back', err, result);
+          continuePromise.resolve(false);
         }
       );
 
@@ -39,4 +46,6 @@ module.exports.updateLighthouse = function (el) {
   };
 
   http.request(options, callback).end();
+
+  return continuePromise;
 };
