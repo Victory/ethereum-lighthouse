@@ -1,5 +1,6 @@
 const Web3 = require("web3");
 const el = require(__dirname + "/lib/setup.js");
+const vPromise = require('vPromise');
 
 var lightHouse;
 try {
@@ -21,7 +22,6 @@ el.contract = contract;
 el.web3 = web3;
 el.eth = eth;
 
-
 var Runner = function () {
 
   this.isRunning = false;
@@ -37,19 +37,23 @@ var Runner = function () {
     process.exit(1);
   };
 
+  new vPromise(function (res, rej) {
+    el.done = res;
+    el.rej = rej;
+  }).then(resolved, rejected);
 
   return {
     run: function () {
       if (this.isRunning) {
+        console.log('el.done() has not been called, skipping');
         return;
       }
       this.isRunning = true;
 
-      lightHouse[el.options.pushFunction](el).then(resolved, rejected);
+      lightHouse[el.options.pushFunction](el);
     }.bind(this)
   }
 };
 
 var runner = new Runner();
 setInterval(runner.run, el.options.interval);
-//console.log("lighthouse", el.options);

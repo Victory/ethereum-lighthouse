@@ -1,13 +1,9 @@
-var vPromise = require('vPromise');
-
 module.exports.flow = function (el) {
-  var vp = new vPromise(function (resolve, reject) {
-    setTimeout(function () {
-      resolve(true);
-    }, 3000);
-  });
 
-  console.log('oh hai');
+  // simulate a long running process
+  setTimeout(function () {
+    el.done(false);
+  }, 3000);
 
-  return vp;
+  console.log('running flow');
 };
