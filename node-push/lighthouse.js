@@ -37,6 +37,7 @@ var Runner = function () {
     process.exit(1);
   };
 
+  // TODO: chain with each done
   new vPromise(function (res, rej) {
     el.done = res;
     el.rej = rej;
